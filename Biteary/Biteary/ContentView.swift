@@ -12,6 +12,7 @@ struct ContentView: View {
         VStack {
             Image(systemName: "line.horizontal.3.decrease")
                 .imageScale(.large)
+                .rotationEffect(Angle(degrees: 180))
                 .foregroundStyle(.tint)
             Text("Hello, world!")
         }
