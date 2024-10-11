@@ -8,11 +8,46 @@
 import SwiftUI
 
 struct FolderView: View {
+    
+    var folder: Folder
+    
+    @State private var isShowingCreateFoodView: Bool = false
+
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                
+                Spacer()
+                
+                Button {
+                    isShowingCreateFoodView.toggle()
+                } label: {
+                    AddButton()
+                }
+                
+            }
+            .padding()
+            .navigationTitle(folder.name)
+            .sheet(isPresented: $isShowingCreateFoodView) {
+                CreateFoodView()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing){
+                    Button {
+                        //Edit folder
+                    } label: {
+                        Text("Edit")
+                    }
+                }
+            }
+            
+            
+        }
     }
 }
 
 #Preview {
-    FolderView()
+    FolderView(folder: Folder(id: UUID(), name: "Napoli", color: "blue", foods: [Food(dishName: "Pizza")]))
 }
