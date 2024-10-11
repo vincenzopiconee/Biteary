@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FolderButton: View {
     
+    @State private var isOpened = false
+    
     var folderColor: Color
     var folderColorBack: Color
     var title: String
@@ -40,7 +42,6 @@ struct FolderButton: View {
                     .fontWeight(.semibold)
                     .offset(x: 28, y: -85)
             }
-                
         }
     }
 }

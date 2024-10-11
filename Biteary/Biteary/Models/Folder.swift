@@ -13,13 +13,13 @@ import SwiftUI
 class Folder: Identifiable {
     var id: UUID = UUID()
     var name: String
-    var startDate: Date?
-    var endDate: Date?
+    var startDate: Date
+    var endDate: Date
     var color: String
     var foods: [Food]
     
     //Folder class initializer
-    init(id: UUID, name: String, startDate: Date? = nil, endDate: Date? = nil, color: String, foods: [Food]) {
+    init(id: UUID, name: String, startDate: Date, endDate: Date, color: String, foods: [Food]) {
         self.id = id
         self.name = name
         self.startDate = startDate

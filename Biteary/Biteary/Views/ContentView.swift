@@ -19,7 +19,7 @@ struct ContentView: View {
     var testFolders: [FolderButton] = [
         FolderButton(folderColor: .orangeFolder, folderColorBack: .orangeFolderBack, title: "Napoli", startDate: .now, endDate: .now),
         FolderButton(folderColor: .blueFolder, folderColorBack: .blueFolderBack, title: "Roma", startDate: .now, endDate: .now),
-        FolderButton(folderColor: .redFolder, folderColorBack: .redFolderBack, title: "Berlin")
+        FolderButton(folderColor: .redFolder, folderColorBack: .redFolderBack, title: "Berlin", startDate: .now, endDate: .now)
     ]
 
     
@@ -30,7 +30,11 @@ struct ContentView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(testFolders, id: \.self.title) { folder in
-                            FolderButton(folderColor: folder.folderColor, folderColorBack: folder.folderColorBack, title: folder.title, startDate: folder.startDate, endDate: folder.endDate)
+                            NavigationLink {
+                                FolderView()
+                            } label: {
+                                FolderButton(folderColor: folder.folderColor, folderColorBack: folder.folderColorBack, title: folder.title, startDate: folder.startDate, endDate: folder.endDate)
+                            }
                         }
                     }
                 }

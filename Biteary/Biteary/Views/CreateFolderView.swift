@@ -25,22 +25,26 @@ struct CreateFolderView: View {
                 
                 Section("Folder Dates") {
                     DatePicker("Start Date", selection: $folderStartDate, displayedComponents: .date)
+                        .foregroundStyle(.grayFolderBack)
                     
                     DatePicker("End Date", selection: $folderEndDate, displayedComponents: .date)
+                        .foregroundStyle(.grayFolderBack)
                 }
                 
                 Section("Folder Colour") {
                     Picker("Choose a Colour", selection: $folderColor) {
-                        FolderColorPicker(color: .orangeFolder).tag(Color.orangeFolder)
-                        FolderColorPicker(color: .blueFolder).tag(Color.blueFolder)
-                        FolderColorPicker(color: .redFolder).tag(Color.redFolder)
-                        FolderColorPicker(color: .purpleFolder).tag(Color.purpleFolder)
-                        FolderColorPicker(color: .greenFolder).tag(Color.greenFolder)
-                        FolderColorPicker(color: .yellowFolder).tag(Color.yellowFolder)
-                        FolderColorPicker(color: .grayFolder).tag(Color.grayFolder)
+                        FolderColorPicker(color: .orangeFolder).tag("orange")
+                        FolderColorPicker(color: .blueFolder).tag("blue")
+                        FolderColorPicker(color: .redFolder).tag("red")
+                        FolderColorPicker(color: .purpleFolder).tag("purple")
+                        FolderColorPicker(color: .greenFolder).tag("green")
+                        FolderColorPicker(color: .yellowFolder).tag("yellow")
+                        FolderColorPicker(color: .grayFolder).tag("gray")
 
                     }
                     .pickerStyle(.inline)
+                    .foregroundStyle(.grayFolderBack)
+
                 }
             }
             .navigationTitle("Create Folder")
