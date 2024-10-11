@@ -13,16 +13,16 @@ import UIKit
 class Food: Identifiable {
     var id: UUID = UUID()
     var dishName: String
-    var restaurantName: String?
-    var city: String?
-    var price: Double?
-    var rating: Int?
-    var notes: String?
-    var date: Date?
+    var restaurantName: String
+    var city: String
+    var price: Double
+    var rating: Int
+    var notes: String
+    var date: Date
     var imageData: [Data]?
     
     //Food class initializer
-    init(dishName: String, restaurantName: String? = nil, city: String? = nil, price: Double? = nil, rating: Int? = nil, notes: String? = nil, date: Date? = nil, imageData: [Data]? = nil) {
+    init(dishName: String, restaurantName: String = "", city: String = "", price: Double = 0.0, rating: Int = 0, notes: String = "", date: Date = Date.now, imageData: [Data]? = nil) {
         self.dishName = dishName
         self.restaurantName = restaurantName
         self.city = city
