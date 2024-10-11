@@ -5,6 +5,7 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,5 +14,6 @@ struct BitearyApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Folder.self)
     }
 }

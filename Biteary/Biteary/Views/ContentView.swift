@@ -9,7 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var searchText: String = ""
-    @State private var isSearching: Bool = false
+    @State private var isShowingCreateFolderView: Bool = false
+    
+    @State private var sortOrder = [
+        SortDescriptor(\Folder.name),
+        SortDescriptor(\Folder.startDate)
+    ]
+    
+    var testFolders: [FolderButton] = [
+        FolderButton(folderColor: .orangeFolder, folderColorBack: .orangeFolderBack, title: "Napoli", startDate: .now, endDate: .now),
+        FolderButton(folderColor: .blueFolder, folderColorBack: .blueFolderBack, title: "Roma", startDate: .now, endDate: .now),
+        FolderButton(folderColor: .redFolder, folderColorBack: .redFolderBack, title: "Berlin")
+    ]
 
     
     var body: some View {
@@ -18,65 +29,44 @@ struct ContentView: View {
                 
                 ScrollView {
                     LazyVStack {
-                        //ForEach(folders) { folder in
-                            //FolderCard(folder: folder)
-                        //}
+                        ForEach(testFolders, id: \.self.title) { folder in
+                            FolderButton(folderColor: folder.folderColor, folderColorBack: folder.folderColorBack, title: folder.title, startDate: folder.startDate, endDate: folder.endDate)
+                        }
                     }
                 }
                 
                 Spacer()
                 
-                NavigationLink {
-                    //somewhere
+                Button {
+                    isShowingCreateFolderView.toggle()
                 } label: {
-                    ZStack {
-                        Circle()
-                            .fill(.orange)
-                            .frame(width: 80, height: 80)
-                        
-                        Image(systemName: "plus")
-                            .foregroundStyle(.white)
-                            .font(.title.bold())
-                    }
-                    
+                    AddButton()
                 }
                 
-                
             }
+            .padding()
             .navigationTitle("Biteary")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isSearching.toggle()
-                    } label: {
-                        Image(systemName: "magnifyingglass")
+                Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Sort by Name")
+                            .tag([
+                                SortDescriptor(\Folder.name),
+                                SortDescriptor(\Folder.startDate)
+                            ])
+            
+                        Text("Sort by Start Date")
+                            .tag([
+                                SortDescriptor(\Folder.startDate),
+                                SortDescriptor(\Folder.name)
+                            ])
                     }
-            }
-                
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu(content: {
-                        Text("Order Alphabetically")
-                        Text("Order by Newest")
-                        Text("Order by Oldest")
-                    }, label: {Image(systemName: "ellipsis.circle")})
                 }
             }
-            .if(isSearching) { view in
-                view.searchable(text: $searchText)
+            .sheet(isPresented: $isShowingCreateFolderView) {
+                CreateFolderView()
             }
             
-        }
-    }
-}
-
-extension View {
-    @ViewBuilder
-    func `if`<Content: View>(_ condition: Bool, content: (Self) -> Content) -> some View {
-        if condition {
-            content(self)
-        } else {
-            self
         }
     }
 }
