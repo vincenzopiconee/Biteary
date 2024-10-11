@@ -11,11 +11,46 @@ struct FolderButton: View {
     
     @State private var isOpened = false
     
-    var folderColor: Color
-    var folderColorBack: Color
+    var color: String
     var title: String
     var startDate: Date?
     var endDate: Date?
+    var folderColor: Color {
+        if color == "orange" {
+            return Color.orangeFolder
+        } else if color == "red"{
+            return Color.redFolder
+        } else if color == "blue"{
+            return Color.blueFolder
+        } else if color == "green"{
+            return Color.greenFolder
+        } else if color == "yellow"{
+            return Color.yellowFolder
+        } else if color == "gray"{
+            return Color.grayFolder
+        } else if color == "purple"{
+            return Color.purpleFolder
+        }
+        return Color.orangeFolder
+    }
+    var folderColorBack: Color {
+        if color == "orange" {
+            return Color.orangeFolderBack
+        } else if color == "red"{
+            return Color.redFolderBack
+        } else if color == "blue"{
+            return Color.blueFolderBack
+        } else if color == "green"{
+            return Color.greenFolderBack
+        } else if color == "yellow"{
+            return Color.yellowFolderBack
+        } else if color == "gray"{
+            return Color.grayFolderBack
+        } else if color == "purple"{
+            return Color.purpleFolderBack
+        }
+        return Color.orangeFolderBack
+    }
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -47,5 +82,5 @@ struct FolderButton: View {
 }
 
 #Preview {
-    FolderButton(folderColor: .orangeFolder, folderColorBack: .orangeFolderBack, title: "Napoli", startDate: .now, endDate: .now)
+    FolderButton(color: "orange", title: "Napoli", startDate: .now, endDate: .now)
 }

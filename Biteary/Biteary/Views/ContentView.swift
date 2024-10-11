@@ -16,10 +16,10 @@ struct ContentView: View {
         SortDescriptor(\Folder.startDate)
     ]
     
-    var testFolders: [FolderButton] = [
-        FolderButton(folderColor: .orangeFolder, folderColorBack: .orangeFolderBack, title: "Napoli", startDate: .now, endDate: .now),
-        FolderButton(folderColor: .blueFolder, folderColorBack: .blueFolderBack, title: "Roma", startDate: .now, endDate: .now),
-        FolderButton(folderColor: .redFolder, folderColorBack: .redFolderBack, title: "Berlin", startDate: .now, endDate: .now)
+    var testFolders: [Folder] = [
+        Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "orange", foods: [Food(dishName: "Pizza")]),
+        Folder(id: UUID(), name: "Roma", startDate: Date.now, endDate: Date.now, color: "red", foods: [Food(dishName: "Pizza")]),
+        Folder(id: UUID(), name: "Berlin", startDate: Date.now, endDate: Date.now, color: "green", foods: [Food(dishName: "Pizza")])
     ]
 
     
@@ -29,11 +29,11 @@ struct ContentView: View {
                 
                 ScrollView {
                     LazyVStack {
-                        ForEach(testFolders, id: \.self.title) { folder in
+                        ForEach(testFolders, id: \.self.name) { folder in
                             NavigationLink {
-                                FolderView()
+                                FolderView(folder: folder)
                             } label: {
-                                FolderButton(folderColor: folder.folderColor, folderColorBack: folder.folderColorBack, title: folder.title, startDate: folder.startDate, endDate: folder.endDate)
+                                FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate)
                             }
                         }
                     }
