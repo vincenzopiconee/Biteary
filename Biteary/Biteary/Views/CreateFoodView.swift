@@ -22,15 +22,29 @@ struct CreateFoodView: View {
     @State private var foodDate: Date = Date.now
     let currencyFormat = Locale.current.currency?.identifier ?? "EUR"
     
+    //Image var
+    @State private var showImagePicker: Bool = false
+    @State private var image: UIImage?
+    
     
     var body: some View {
         
         NavigationStack {
             
             Button{
-                //Action to add image
+                
+                self.showImagePicker.toggle()
             } label: {
-                AddImage()
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding()
+                } else {
+                    AddImage()
+                }
+                
             }
             .padding()
             
@@ -72,11 +86,17 @@ struct CreateFoodView: View {
                         .submitLabel(.done)
                 }
             }
+            .sheet(isPresented: $showImagePicker) {
+                ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
+            }
             .navigationTitle("Add Dish")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
                     Button {
                         let newFood = Food(dishName: dishName, restaurantName: restaurantName, city: cityName, price: price, rating: rating, notes: notes, date: foodDate, imageData: [])
+                        if let image {
+                            newFood.addImage(image)
+                        }
                         folder.foods.append(newFood)
                         dismiss()
                     } label: {
@@ -94,6 +114,7 @@ struct CreateFoodView: View {
                 }
             }
         }
+        
     }
 }
 
@@ -102,3 +123,40 @@ struct CreateFoodView: View {
 }
 
 
+struct ImagePickerView: UIViewControllerRepresentable {
+    
+    @Binding var image: UIImage?
+    @Binding var isShown: Bool
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .camera
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var parent: ImagePickerView
+
+        init(parent: ImagePickerView) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.image = image
+            }
+            parent.isShown = false
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.isShown = false
+        }
+    }
+}
