@@ -57,4 +57,12 @@ class Food: Identifiable {
     func getImages() -> [UIImage]? {
         return imageData?.compactMap { UIImage(data: $0) }
     }
+    
+    
+    func getFirstImage() -> UIImage? {
+        if let uiImage = imageData?.first {
+            return UIImage(data: uiImage)
+        }
+        return nil
+    }
 }
