@@ -15,8 +15,7 @@ struct CreateFolderView: View {
     @State private var folderStartDate: Date = Date.now
     @State private var folderEndDate: Date = Date.now
     @State private var folderColor: Color = Color.orangeFolder
-
-    
+        
     var body: some View {
         NavigationStack {
             Form {
@@ -58,6 +57,7 @@ struct CreateFolderView: View {
                     } label: {
                         Text("Save")
                     }
+                    .disabled(folderName.isEmpty)
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
