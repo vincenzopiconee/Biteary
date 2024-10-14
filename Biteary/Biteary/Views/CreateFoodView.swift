@@ -82,6 +82,7 @@ struct CreateFoodView: View {
                     } label: {
                         Text("Save")
                     }
+                    .disabled(dishName.isEmpty || restaurantName.isEmpty || cityName.isEmpty || price.isZero)
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
