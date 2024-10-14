@@ -14,12 +14,13 @@ struct FoodView: View {
     var body: some View {
         NavigationStack {
             
-            Button{
-                
-            } label: {
-                AddImage()
+            if let firstImage = food.getFirstImage() {
+                Image(uiImage: firstImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .padding()
             }
-            .padding()
                 
             Form {
                 Section("Dish Name") {
