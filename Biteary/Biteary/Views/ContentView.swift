@@ -30,18 +30,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                
-                ScrollView {
-                    LazyVStack {
-                        ForEach(folders) { folder in
-                            NavigationLink {
-                                FolderView(folder: folder)
-                            } label: {
-                                FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate)
-                            }
-                        }
-                    }
-                }
+                FolderListView(sort: sortOrder)
                 
                 Spacer()
                 
