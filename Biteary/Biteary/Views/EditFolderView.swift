@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct EditFolderView: View {
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
-
+    
     @Bindable var folder: Folder
+    
     @State private var showingAlert = false
     
     var body: some View {
@@ -23,11 +25,9 @@ struct EditFolderView: View {
                 Section("Folder Dates") {
                     DatePicker("Start Date", selection: $folder.startDate, displayedComponents: .date)
                         .foregroundStyle(.grayFolderBack)
-
                     
                     DatePicker("End Date", selection: $folder.endDate, displayedComponents: .date)
                         .foregroundStyle(.grayFolderBack)
-
                 }
                 
                 Section("Folder Colour") {
@@ -42,36 +42,28 @@ struct EditFolderView: View {
                     }
                     .pickerStyle(.inline)
                     .foregroundStyle(.grayFolderBack)
-
                 }
                 
                 Section {
                     HStack {
                         Spacer()
+                        
                         Button {
                             showingAlert.toggle()
                         } label: {
                             Text("Delete Folder")
                                 .foregroundStyle(.red)
-
                         }
+                        
                         Spacer()
                     }
                 }
             }
             .navigationTitle("Edit Folder")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing){
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Save")
-                    }
-                }
-            }
             .alert("Delete Folder", isPresented: $showingAlert){
                 Button("Delete", role: .destructive) {
-                    //Delete Folder action
+                    folder.foods.removeAll()
+                    modelContext.delete(folder)
                     dismiss()
                 }
                 Button("Cancel", role: .cancel) { }

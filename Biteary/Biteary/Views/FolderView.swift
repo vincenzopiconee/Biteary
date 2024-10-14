@@ -8,16 +8,37 @@
 import SwiftUI
 
 struct FolderView: View {
+        
+    @State private var isShowingCreateFoodView: Bool = false
     
     var folder: Folder
-    
-    @State private var isShowingCreateFoodView: Bool = false
-
-    
+    let layout = [
+        GridItem(.fixed(150)),
+        GridItem(.fixed(150))
+    ]
+    /*
+    var testFood: [Food] = [
+        Food(dishName: "Pizza Frita"),
+        Food(dishName: "Pasta"),
+        Food(dishName: "Tacos")
+    ]
+     */
     
     var body: some View {
         NavigationStack {
             VStack {
+                
+                ScrollView {
+                    LazyVGrid(columns: layout, spacing: 30) {
+                        ForEach(folder.foods) { food in
+                            NavigationLink {
+                                FoodView(food: food)
+                            } label: {
+                                FoodContainer(food: food)
+                            }
+                        }
+                    }
+                }
                 
                 Spacer()
                 
@@ -31,12 +52,12 @@ struct FolderView: View {
             .padding()
             .navigationTitle(folder.name)
             .sheet(isPresented: $isShowingCreateFoodView) {
-                CreateFoodView()
+                CreateFoodView(folder: folder)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
-                    Button {
-                        //Edit folder
+                    NavigationLink {
+                        EditFolderView(folder: folder)
                     } label: {
                         Text("Edit")
                     }

@@ -12,7 +12,6 @@ struct FoodView: View {
     var food: Food
     
     var body: some View {
-        
         NavigationStack {
             
             Button{
@@ -22,7 +21,6 @@ struct FoodView: View {
             }
             .padding()
                 
-            
             Form {
                 Section("Dish Name") {
                     Text(food.dishName)
@@ -50,13 +48,12 @@ struct FoodView: View {
                 Section("Notes") {
                     Text(food.notes)
                 }
-                
             }
             .navigationTitle(food.dishName)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
-                    Button {
-                        //save folder
+                    NavigationLink {
+                        EditFoodView(food: food)
                     } label: {
                         Text("Edit")
                     }

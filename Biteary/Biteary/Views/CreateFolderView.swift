@@ -9,11 +9,12 @@ import SwiftUI
 
 struct CreateFolderView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     
     @State private var folderName: String = ""
     @State private var folderStartDate: Date = Date.now
     @State private var folderEndDate: Date = Date.now
-    @State private var folderColor: Color = .orangeFolder
+    @State private var folderColor: Color = Color.orangeFolder
 
     
     var body: some View {
@@ -21,6 +22,7 @@ struct CreateFolderView: View {
             Form {
                 Section("Folder Name") {
                     TextField("Type your folder name", text: $folderName)
+                        .submitLabel(.done)
                 }
                 
                 Section("Folder Dates") {
@@ -32,26 +34,27 @@ struct CreateFolderView: View {
                 }
                 
                 Section("Folder Colour") {
-                    Picker("Choose a Colour", selection: $folderColor) {
-                        FolderColorPicker(color: .orangeFolder).tag("orange")
-                        FolderColorPicker(color: .blueFolder).tag("blue")
-                        FolderColorPicker(color: .redFolder).tag("red")
-                        FolderColorPicker(color: .purpleFolder).tag("purple")
-                        FolderColorPicker(color: .greenFolder).tag("green")
-                        FolderColorPicker(color: .yellowFolder).tag("yellow")
-                        FolderColorPicker(color: .grayFolder).tag("gray")
-
+                    Picker("Choose a Colour", selection: $folderColor) {  // folderColor is of type Color
+                        FolderColorPicker(color: .orangeFolder).tag(Color.orangeFolder)
+                        FolderColorPicker(color: .blueFolder).tag(Color.blueFolder)
+                        FolderColorPicker(color: .redFolder).tag(Color.redFolder)
+                        FolderColorPicker(color: .purpleFolder).tag(Color.purpleFolder)
+                        FolderColorPicker(color: .greenFolder).tag(Color.greenFolder)
+                        FolderColorPicker(color: .yellowFolder).tag(Color.yellowFolder)
+                        FolderColorPicker(color: .grayFolder).tag(Color.grayFolder)
                     }
                     .pickerStyle(.inline)
                     .foregroundStyle(.grayFolderBack)
-
                 }
             }
             .navigationTitle("Create Folder")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
                     Button {
-                        //save folder
+                        let folderColorValue = getColor(for: folderColor)
+                        let newFolder = Folder(id: UUID(), name: folderName, startDate: folderStartDate, endDate: folderEndDate, color: folderColorValue, foods: [])
+                        modelContext.insert(newFolder)
+                        dismiss()
                     } label: {
                         Text("Save")
                     }
@@ -65,6 +68,27 @@ struct CreateFolderView: View {
                     }
                 }
             }
+        }
+    }
+    
+    func getColor(for colorString: Color) -> String {
+        switch colorString {
+        case .orangeFolder:
+            return "orange"
+        case .blueFolder:
+            return "blue"
+        case .redFolder:
+            return "red"
+        case .purpleFolder:
+            return "purple"
+        case .greenFolder:
+            return "green"
+        case .yellowFolder:
+            return "yellow"
+        case .grayFolder:
+            return "gray"
+        default:
+            return "orange"
         }
     }
 }

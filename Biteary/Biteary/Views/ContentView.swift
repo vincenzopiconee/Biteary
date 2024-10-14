@@ -5,23 +5,27 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var folders: [Folder]
+    
     @State private var searchText: String = ""
     @State private var isShowingCreateFolderView: Bool = false
-    
     @State private var sortOrder = [
         SortDescriptor(\Folder.name),
         SortDescriptor(\Folder.startDate)
     ]
-    
+
+    /*
     var testFolders: [Folder] = [
         Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "orange", foods: [Food(dishName: "Pizza")]),
         Folder(id: UUID(), name: "Roma", startDate: Date.now, endDate: Date.now, color: "red", foods: [Food(dishName: "Pizza")]),
         Folder(id: UUID(), name: "Berlin", startDate: Date.now, endDate: Date.now, color: "green", foods: [Food(dishName: "Pizza")])
     ]
-
+     */
     
     var body: some View {
         NavigationStack {
@@ -29,7 +33,7 @@ struct ContentView: View {
                 
                 ScrollView {
                     LazyVStack {
-                        ForEach(testFolders, id: \.self.name) { folder in
+                        ForEach(folders) { folder in
                             NavigationLink {
                                 FolderView(folder: folder)
                             } label: {
