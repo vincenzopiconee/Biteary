@@ -19,7 +19,7 @@ struct FolderListView: View {
                     NavigationLink {
                         FolderView(folder: folder)
                     } label: {
-                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate)
+                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: folder.foods.first?.getFirstImage())
                     }
                 }
             }

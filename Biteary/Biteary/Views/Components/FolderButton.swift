@@ -52,35 +52,58 @@ struct FolderButton: View {
         return Color.orangeFolderBack
     }
     
+    var image: UIImage?
+    
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             Rectangle()
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(width: 150, height: 172)
-                .foregroundStyle(folderColorBack)
+                .foregroundStyle(folderColorBack.gradient)
             
             Rectangle()
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(width: 320, height: 160)
-                .foregroundStyle(folderColor)
+                .foregroundStyle(folderColor.gradient)
             
-            Text(title)
-                .foregroundStyle(.folderText)
-                .font(.system(size: 25))
-                .fontWeight(.semibold)
-                .offset(x: 28, y: -108)
-            
-            if let startDate, let endDate{
-                Text("\(String(describing: startDate.formatted(date: .numeric, time: .omitted))) - \(String(describing: endDate.formatted(date: .numeric, time: .omitted)))")
-                    .foregroundStyle(.folderText)
-                    .font(.system(size: 10))
-                    .fontWeight(.semibold)
-                    .offset(x: 28, y: -85)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .foregroundStyle(.folderText)
+                        .font(.system(size: 25))
+                        .fontWeight(.semibold)
+                        .padding([.leading, .trailing, .bottom], 10)
+                        .minimumScaleFactor(0.01)
+                    
+                    if let startDate, let endDate{
+                        Text("\(String(describing: startDate.formatted(date: .numeric, time: .omitted))) - \(String(describing: endDate.formatted(date: .numeric, time: .omitted)))")
+                            .foregroundStyle(.folderText)
+                            .font(.system(size: 10))
+                            .fontWeight(.semibold)
+                            .padding([.leading, .trailing], 10)
+                    }
+                    Spacer()
+                }
+                .frame(width: 150, height: 150)
+                .padding(.trailing, 10)
+                if image != nil {
+                    Image(uiImage: image!)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 100, height: 120)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: CGFloat(10)))
+                        .shadow(radius: 8, x: 0, y: 10)
+                        .padding(.leading, 20)
+                }
+                
             }
         }
+        
+
     }
 }
 
 #Preview {
-    FolderButton(color: "orange", title: "Napoli", startDate: .now, endDate: .now)
+    FolderButton(color: "orange", title: "Napoli", startDate: .now, endDate: .now, image: UIImage(imageLiteralResourceName: "Pizza"))
 }
