@@ -23,10 +23,10 @@ struct EditFolderView: View {
                 }
                 
                 Section("Folder Dates") {
-                    DatePicker("Start Date", selection: $folder.startDate, displayedComponents: .date)
+                    DatePicker("Start Date", selection: $folder.startDate, in: ...folder.endDate, displayedComponents: .date)
                         .foregroundStyle(.grayFolderBack)
                     
-                    DatePicker("End Date", selection: $folder.endDate, displayedComponents: .date)
+                    DatePicker("End Date", selection: $folder.endDate, in: folder.startDate...,  displayedComponents: .date)
                         .foregroundStyle(.grayFolderBack)
                 }
                 
