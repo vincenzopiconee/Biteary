@@ -40,7 +40,7 @@ struct EditFolderView: View {
                         FolderColorPicker(color: .yellowFolder).tag("yellow")
                         FolderColorPicker(color: .grayFolder).tag("gray")
                     }
-                    .pickerStyle(.inline)
+                    .pickerStyle(WheelPickerStyle())
                     .foregroundStyle(.grayFolderBack)
                 }
                 
