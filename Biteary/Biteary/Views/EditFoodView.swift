@@ -5,6 +5,7 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
+import PhotosUI
 import SwiftUI
 
 struct EditFoodView: View {
@@ -21,6 +22,9 @@ struct EditFoodView: View {
     
     //Image var
     @State private var showImagePicker: Bool = false
+    @State private var pickerItem: PhotosPickerItem?
+    @State private var showPhotosPicker: Bool = false
+    @State private var showActionSheet = false
     @State private var image: UIImage?
     
     
@@ -29,7 +33,7 @@ struct EditFoodView: View {
         NavigationStack {
             
             Button{
-                self.showImagePicker.toggle()
+                showActionSheet.toggle()
             } label: {
                 if let image = image {
                     Image(uiImage: image)
@@ -37,6 +41,15 @@ struct EditFoodView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .padding()
+                        .contextMenu {
+                            Button("Take Picture with Camera") {
+                                showImagePicker.toggle()
+                            }
+                            
+                            Button("Choose a Picture from Gallery") {
+                                showPhotosPicker.toggle()
+                            }
+                        }
                     
                 } else if let image = food.getFirstImage() {
                     Image(uiImage: image)
@@ -44,9 +57,46 @@ struct EditFoodView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .padding()
+                        .contextMenu {
+                            Button("Take Picture with Camera") {
+                                showImagePicker.toggle()
+                            }
+                            
+                            Button("Choose a Picture from Gallery") {
+                                showPhotosPicker.toggle()
+                            }
+                        }
                 } else {
                     AddImage()
+                        .contextMenu {
+                            Button("Take Picture with Camera") {
+                                showImagePicker.toggle()
+                            }
+                            
+                            Button("Choose a Picture from Gallery") {
+                                showPhotosPicker.toggle()
+                            }
+                        }
                 }
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(title: Text("Choose method to upload image"),
+                            buttons: [
+                                .cancel(),
+                                .default(
+                                    Text("Take Picture with Camera"),
+                                    action: {
+                                        showImagePicker.toggle()
+                                    }
+                                ),
+                                .default(
+                                    Text("Choose a Picture from Gallery"),
+                                    action: {
+                                        showPhotosPicker.toggle()
+                                    }
+                                )
+                            ]
+                )
             }
             .onChange(of: image) { oldImage, newImage in
                 food.deleteImage(at: 0)
@@ -106,6 +156,20 @@ struct EditFoodView: View {
             }
             .sheet(isPresented: $showImagePicker) {
                 ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
+            }
+            .sheet(isPresented: $showPhotosPicker) {
+                PhotosPicker("Select an image", selection: $pickerItem, matching: .images)
+            }
+            .onChange(of: pickerItem) { oldItem, newItem in
+                Task {
+                    showPhotosPicker.toggle()
+
+                    if let newItem = newItem,
+                       let data = try? await newItem.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data) {
+                        image = uiImage
+                    }
+                }
             }
             .navigationTitle("Edit Dish")
             .navigationBarBackButtonHidden(true)
