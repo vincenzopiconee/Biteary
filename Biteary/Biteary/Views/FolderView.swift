@@ -32,7 +32,7 @@ struct FolderView: View {
                     LazyVGrid(columns: layout, spacing: 30) {
                         ForEach(folder.foods) { food in
                             NavigationLink {
-                                FoodView(food: food)
+                                FoodView(food: food, folder: folder)
                             } label: {
                                 FoodContainer(food: food)
                             }

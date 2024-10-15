@@ -13,6 +13,8 @@ struct EditFoodView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @Bindable var food: Food
+    @Bindable var folder: Folder
+
     @State private var showingAlert = false
     
     let currencyFormat = Locale.current.currency?.identifier ?? "EUR"
@@ -121,7 +123,7 @@ struct EditFoodView: View {
             }
             .alert("Delete Dish", isPresented: $showingAlert){
                 Button("Delete", role: .destructive) {
-                    //Delete Dish action
+                    folder.foods.removeAll(where: { $0.id == food.id })
                     dismiss()
                 }
                 Button("Cancel", role: .cancel) { }
@@ -134,5 +136,5 @@ struct EditFoodView: View {
 }
 
 #Preview {
-    EditFoodView(food: Food(dishName: "Pizza Frita"))
+    EditFoodView(food: Food(dishName: "Pizza", restaurantName: "Michele",city: "Napoli", price: 7.5, rating: 4, notes: "I really liked the sauce"), folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "orange", foods: [Food(dishName: "Pizza", restaurantName: "Michele",city: "Napoli", price: 7.5, rating: 4, notes: "I really liked the sauce")]))
 }
