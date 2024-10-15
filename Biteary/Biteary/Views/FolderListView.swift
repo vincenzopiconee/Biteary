@@ -16,18 +16,25 @@ struct FolderListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(folders) { folder in
+                    
+                    let image = updatePreviewImage(folder)
+                    
                     NavigationLink {
                         FolderView(folder: folder)
                     } label: {
-                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: folder.foods.first?.getFirstImage())
+                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: image)
                     }
                 }
             }
         }
     }
     init(sort: [SortDescriptor<Folder>]) {
-            _folders = Query(sort: sort)
-        }
+        _folders = Query(sort: sort)
+    }
+    
+    func updatePreviewImage(_ folder: Folder) -> UIImage? {
+        folder.foods.first?.getFirstImage()
+    }
 }
 
 #Preview {
