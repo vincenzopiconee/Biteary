@@ -33,17 +33,7 @@ struct CreateFolderView: View {
                 }
                 
                 Section("Folder Colour") {
-                    Picker("Choose a Colour", selection: $folderColor) {  // folderColor is of type Color
-                        FolderColorPicker(color: .orangeFolder).tag(Color.orangeFolder)
-                        FolderColorPicker(color: .blueFolder).tag(Color.blueFolder)
-                        FolderColorPicker(color: .redFolder).tag(Color.redFolder)
-                        FolderColorPicker(color: .purpleFolder).tag(Color.purpleFolder)
-                        FolderColorPicker(color: .greenFolder).tag(Color.greenFolder)
-                        FolderColorPicker(color: .yellowFolder).tag(Color.yellowFolder)
-                        FolderColorPicker(color: .grayFolder).tag(Color.grayFolder)
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    .foregroundStyle(.grayFolderBack)
+                    ColorPickerView(colors: [.orangeFolder, .blueFolder, .redFolder, .purpleFolder, .greenFolder, .yellowFolder, .grayFolder], selectedColor: $folderColor)
                 }
                 
             }
