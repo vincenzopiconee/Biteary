@@ -67,26 +67,26 @@ struct CreateFoodView: View {
                             showPhotosPicker.toggle()
                         }
                     }
-                    .actionSheet(isPresented: $showActionSheet) {
-                        ActionSheet(title: Text("Choose method to upload image"),
-                                    buttons: [
-                                        .cancel(),
-                                        .default(
-                                            Text("Take Picture with Camera"),
-                                            action: {
-                                                showImagePicker.toggle()
-                                            }
-                                        ),
-                                        .default(
-                                            Text("Choose a Picture from Gallery"),
-                                            action: {
-                                                showPhotosPicker.toggle()
-                                            }
-                                        )
-                                    ]
-                        )
-                    }
                 }
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(title: Text("Choose method to upload image"),
+                            buttons: [
+                                .cancel(),
+                                .default(
+                                    Text("Take Picture with Camera"),
+                                    action: {
+                                        showImagePicker.toggle()
+                                    }
+                                ),
+                                .default(
+                                    Text("Choose a Picture from Gallery"),
+                                    action: {
+                                        showPhotosPicker.toggle()
+                                    }
+                                )
+                            ]
+                )
             }
             
             Form {
