@@ -5,6 +5,7 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
+import PhotosUI
 import SwiftUI
 
 struct CreateFoodView: View {
@@ -24,6 +25,9 @@ struct CreateFoodView: View {
     
     //Image var
     @State private var showImagePicker: Bool = false
+    @State private var showPhotosPicker: Bool = false
+    @State private var showActionSheet = false
+    @State private var pickerItem: PhotosPickerItem?
     @State private var image: UIImage?
     
     
@@ -31,9 +35,8 @@ struct CreateFoodView: View {
         
         NavigationStack {
             
-            Button{
-                
-                self.showImagePicker.toggle()
+            Button {
+                showActionSheet.toggle()
             } label: {
                 if let image = image {
                     Image(uiImage: image)
@@ -41,12 +44,50 @@ struct CreateFoodView: View {
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .padding()
+                        .contextMenu {
+                            Button("Take Picture with Camera") {
+                                showImagePicker.toggle()
+                            }
+
+                            Button("Choose a Picture from Gallery") {
+                                showPhotosPicker.toggle()
+                            }
+                        }
                 } else {
-                    AddImage()
+                    VStack {
+                        AddImage()
+                            .padding()
+                    }
+                    .contextMenu {
+                        Button("Take Picture with Camera") {
+                            showImagePicker.toggle()
+                        }
+
+                        Button("Choose a Picture from Gallery") {
+                            showPhotosPicker.toggle()
+                        }
+                    }
+                    .actionSheet(isPresented: $showActionSheet) {
+                        ActionSheet(title: Text("Choose method to upload image"),
+                                    buttons: [
+                                        .cancel(),
+                                        .default(
+                                            Text("Take Picture with Camera"),
+                                            action: {
+                                                showImagePicker.toggle()
+                                            }
+                                        ),
+                                        .default(
+                                            Text("Choose a Picture from Gallery"),
+                                            action: {
+                                                showPhotosPicker.toggle()
+                                            }
+                                        )
+                                    ]
+                        )
+                    }
                 }
-                
             }
-            .padding()
             
             Form {
                 Section("Dish Name") {
@@ -86,10 +127,22 @@ struct CreateFoodView: View {
                         .submitLabel(.done)
                 }
             }
+            .navigationTitle("Add Dish")
             .sheet(isPresented: $showImagePicker) {
                 ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
             }
-            .navigationTitle("Add Dish")
+            .sheet(isPresented: $showPhotosPicker) {
+                PhotosPicker("Select an image", selection: $pickerItem, matching: .images)
+            }
+            .onChange(of: pickerItem) { oldItem, newItem in
+                Task {
+                    showPhotosPicker.toggle()
+                    if let data = try? await newItem?.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data) {
+                        image = uiImage
+                    }
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
                     Button {
@@ -102,7 +155,7 @@ struct CreateFoodView: View {
                     } label: {
                         Text("Save")
                     }
-                    .disabled(dishName.isEmpty || restaurantName.isEmpty || cityName.isEmpty || price.isZero)
+                    .disabled(dishName.isEmpty)
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
