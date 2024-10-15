@@ -10,19 +10,47 @@ import SwiftUI
 struct EditFoodView: View {
     @Environment(\.dismiss) var dismiss
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @Bindable var food: Food
     @State private var showingAlert = false
     
     let currencyFormat = Locale.current.currency?.identifier ?? "EUR"
+    
+    //Image var
+    @State private var showImagePicker: Bool = false
+    @State private var image: UIImage?
+    
     
     var body: some View {
         
         NavigationStack {
             
             Button{
-                //Action to add image
+                self.showImagePicker.toggle()
             } label: {
-                AddImage()
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding()
+                    
+                } else if let image = food.getFirstImage() {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding()
+                } else {
+                    AddImage()
+                }
+            }
+            .onChange(of: image) { oldImage, newImage in
+                food.deleteImage(at: 0)
+                if let newImage = image {
+                    food.addImage(newImage)
+                }
             }
             .padding()
             
@@ -74,7 +102,23 @@ struct EditFoodView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showImagePicker) {
+                ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
+            }
             .navigationTitle("Edit Dish")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Save")
+                        }
+                    }
+                }
+            }
             .alert("Delete Dish", isPresented: $showingAlert){
                 Button("Delete", role: .destructive) {
                     //Delete Dish action
@@ -84,6 +128,7 @@ struct EditFoodView: View {
             } message: {
                 Text("Are you sure you want to delete this dish?")
             }
+             
         }
     }
 }
