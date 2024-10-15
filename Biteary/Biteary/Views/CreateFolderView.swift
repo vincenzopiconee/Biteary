@@ -14,8 +14,8 @@ struct CreateFolderView: View {
     @State private var folderName: String = ""
     @State private var folderStartDate: Date = Date.now
     @State private var folderEndDate: Date = Date.now
-    @State private var folderColor: Color = Color.orangeFolder
-        
+    @State private var folderColor: Color = Color.purpleFolder
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -42,9 +42,10 @@ struct CreateFolderView: View {
                         FolderColorPicker(color: .yellowFolder).tag(Color.yellowFolder)
                         FolderColorPicker(color: .grayFolder).tag(Color.grayFolder)
                     }
-                    .pickerStyle(.inline)
+                    .pickerStyle(WheelPickerStyle())
                     .foregroundStyle(.grayFolderBack)
                 }
+                
             }
             .navigationTitle("Create Folder")
             .toolbar {
