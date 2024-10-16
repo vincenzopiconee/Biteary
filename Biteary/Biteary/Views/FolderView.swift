@@ -26,45 +26,51 @@ struct FolderView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                
-                ScrollView {
-                    LazyVGrid(columns: layout, spacing: 30) {
-                        ForEach(folder.foods) { food in
-                            NavigationLink {
-                                FoodView(food: food, folder: folder)
-                            } label: {
-                                FoodContainer(food: food)
+            ZStack {
+                Image("folderBackgroundPic")
+                    .resizable()
+                    .scaledToFill()
+                    .colorMultiply(folder.getFolderColor())
+                    .opacity(0.1)
+                    .ignoresSafeArea()
+                VStack {
+                    ScrollView {
+                        LazyVGrid(columns: layout, spacing: 30) {
+                            ForEach(folder.foods) { food in
+                                NavigationLink {
+                                    FoodView(food: food, folder: folder)
+                                } label: {
+                                    FoodContainer(food: food)
+                                }
                             }
                         }
                     }
-                }
-                
-                Spacer()
-                
-                Button {
-                    isShowingCreateFoodView.toggle()
-                } label: {
-                    AddButton()
-                }
-                
-            }
-            .padding()
-            .navigationTitle(folder.name)
-            .sheet(isPresented: $isShowingCreateFoodView) {
-                CreateFoodView(folder: folder)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing){
-                    NavigationLink {
-                        EditFolderView(folder: folder)
+                    
+                    Spacer()
+                    
+                    Button {
+                        isShowingCreateFoodView.toggle()
                     } label: {
-                        Text("Edit")
+                        AddButton()
+                    }
+                    
+                }
+                .scrollContentBackground(.hidden)
+                .padding()
+                .navigationTitle(folder.name)
+                .sheet(isPresented: $isShowingCreateFoodView) {
+                    CreateFoodView(folder: folder)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing){
+                        NavigationLink {
+                            EditFolderView(folder: folder)
+                        } label: {
+                            Text("Edit")
+                        }
                     }
                 }
             }
-            
-            
         }
     }
 }
