@@ -16,33 +16,20 @@ struct FolderView: View {
         GridItem(.fixed(150)),
         GridItem(.fixed(150))
     ]
-    /*
-     var testFood: [Food] = [
-     Food(dishName: "Pizza Frita"),
-     Food(dishName: "Pasta"),
-     Food(dishName: "Tacos")
-     ]
-     */
     
     var body: some View {
         NavigationStack {
             ZStack {
-                if !folder.foods.isEmpty {
-                    Image("folderBackgroundPic")
-                        .resizable()
-                        .scaledToFill()
-                        .colorMultiply(folder.getFolderColor())
-                        .opacity(0.05)
-                        .ignoresSafeArea()
-                }
-            
-            
+                Image("folderBackgroundPic")
+                    .resizable()
+                    .scaledToFill()
+                    .colorMultiply(folder.getFolderColor())
+                    .opacity(0.05)
+                    .ignoresSafeArea()
                 VStack {
-                    
                     if folder.foods.isEmpty {
                         WelcomeScreenView(type: "food")
                     } else {
-                     
                         ScrollView {
                             LazyVGrid(columns: layout, spacing: 30) {
                                 ForEach(folder.foods) { food in
@@ -55,7 +42,7 @@ struct FolderView: View {
                             }
                         }
                     }
-                        
+                    
                     Spacer()
                     
                     Button {
@@ -63,31 +50,29 @@ struct FolderView: View {
                     } label: {
                         AddButton()
                     }
-                    
                 }
             }
-            .scrollContentBackground(.hidden)
-            .padding()
-            .navigationTitle(folder.name)
-            .sheet(isPresented: $isShowingCreateFoodView) {
-                CreateFoodView(folder: folder)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing){
-                    NavigationLink {
-                        EditFolderView(folder: folder)
-                    } label: {
-                        Text("Edit")
-                    }
-                    
-                }                
-            }
-
+        }
+        .navigationTitle(folder.name)
+        .sheet(isPresented: $isShowingCreateFoodView) {
+            CreateFoodView(folder: folder)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing){
+                NavigationLink {
+                    EditFolderView(folder: folder)
+                } label: {
+                    Text("Edit")
+                }
                 
             }
         }
+        
+        
+        
     }
-    
-    #Preview {
-        FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")]))
-    }
+}
+
+#Preview {
+    FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")]))
+}
