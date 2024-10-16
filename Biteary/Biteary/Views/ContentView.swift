@@ -30,7 +30,11 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                FolderListView(sort: sortOrder)
+                if folders.isEmpty {
+                    WelcomeScreenView(type: "folder")
+                } else {
+                    FolderListView(sort: sortOrder)
+                }
                 
                 Spacer()
                 
