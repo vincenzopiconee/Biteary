@@ -27,4 +27,23 @@ class Folder: Identifiable {
         self.color = color
         self.foods = foods
     }
+    
+    func getFolderColor() -> Color {
+        switch color {
+        case "blue":
+            return .blueFolder
+        case "red":
+            return .redFolder
+        case "purple":
+            return .purpleFolder
+        case "green":
+            return .greenFolder
+        case "yellow":
+            return .yellowFolder
+        case "gray":
+            return .grayFolder
+        default:
+            return .orangeFolder
+        }
+    }
 }
