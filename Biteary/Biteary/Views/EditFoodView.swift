@@ -154,11 +154,15 @@ struct EditFoodView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showImagePicker) {
-                ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
+            .fullScreenCover(isPresented: $showImagePicker) {
+                ImagePicker(image: self.$image, sourceType: .camera)
+                    .edgesIgnoringSafeArea(.all)
             }
-            .sheet(isPresented: $showPhotosPicker) {
-                PhotosPicker("Select an image", selection: $pickerItem, matching: .images)
+            
+            .fullScreenCover(isPresented: $showPhotosPicker) {
+                ImagePicker(image: self.$image, sourceType: .photoLibrary)
+                    .edgesIgnoringSafeArea(.bottom)
+                    
             }
             .onChange(of: pickerItem) { oldItem, newItem in
                 Task {

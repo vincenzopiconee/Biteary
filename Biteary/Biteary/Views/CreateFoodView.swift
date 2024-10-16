@@ -128,12 +128,17 @@ struct CreateFoodView: View {
                 }
             }
             .navigationTitle("Add Dish")
-            .sheet(isPresented: $showImagePicker) {
-                ImagePickerView(image: self.$image, isShown: self.$showImagePicker)
+            .fullScreenCover(isPresented: $showImagePicker) {
+                ImagePicker(image: self.$image, sourceType: .camera)
+                    .edgesIgnoringSafeArea(.all)
             }
-            .sheet(isPresented: $showPhotosPicker) {
-                PhotosPicker("Select an image", selection: $pickerItem, matching: .images)
+            
+            .fullScreenCover(isPresented: $showPhotosPicker) {
+                ImagePicker(image: self.$image, sourceType: .photoLibrary)
+                    .edgesIgnoringSafeArea(.bottom)
+                    
             }
+            
             .onChange(of: pickerItem) { oldItem, newItem in
                 Task {
                     showPhotosPicker.toggle()
@@ -175,41 +180,41 @@ struct CreateFoodView: View {
     CreateFoodView(folder: Folder(id: UUID(), name: "Pizza", startDate: Date.now, endDate: Date.now, color: "orange", foods: []))
 }
 
-
-struct ImagePickerView: UIViewControllerRepresentable {
-    
+struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
-    @Binding var isShown: Bool
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
-    }
+    @Environment(\.presentationMode) var presentationMode
+    var sourceType: UIImagePickerController.SourceType = .camera
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
+        picker.sourceType = sourceType
         picker.delegate = context.coordinator
-        picker.sourceType = .camera
         return picker
     }
 
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        var parent: ImagePickerView
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
 
-        init(parent: ImagePickerView) {
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var parent: ImagePicker
+
+        init(_ parent: ImagePicker) {
             self.parent = parent
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.image = image
+            if let selectedImage = info[.originalImage] as? UIImage {
+                parent.image = selectedImage
             }
-            parent.isShown = false
+
+            parent.presentationMode.wrappedValue.dismiss()
         }
 
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.isShown = false
+            parent.presentationMode.wrappedValue.dismiss()
         }
     }
 }
