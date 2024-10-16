@@ -22,11 +22,19 @@ struct FolderListView: View {
                     NavigationLink {
                         FolderView(folder: folder)
                     } label: {
-                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: image)
+                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: folder.foods.first?.getFirstImage())
+                            .scrollTransition { content, phase in
+                                content
+//                                    .opacity(phase.isIdentity ? 1 : 0.5) // Apply opacity animation
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.7)
+                            }
+
                     }
                 }
             }
         }
+//        .contentMargins(-10, for: .scrollContent) // Add padding
+                .scrollTargetBehavior(.viewAligned)
     }
     init(sort: [SortDescriptor<Folder>]) {
         _folders = Query(sort: sort)
