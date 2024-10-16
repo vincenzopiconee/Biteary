@@ -31,17 +31,7 @@ struct EditFolderView: View {
                 }
                 
                 Section("Folder Colour") {
-                    Picker("Choose a Colour", selection: $folder.color) {
-                        FolderColorPicker(color: .orangeFolder).tag("orange")
-                        FolderColorPicker(color: .blueFolder).tag("blue")
-                        FolderColorPicker(color: .redFolder).tag("red")
-                        FolderColorPicker(color: .purpleFolder).tag("purple")
-                        FolderColorPicker(color: .greenFolder).tag("green")
-                        FolderColorPicker(color: .yellowFolder).tag("yellow")
-                        FolderColorPicker(color: .grayFolder).tag("gray")
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    .foregroundStyle(.grayFolderBack)
+                    ColorPickerStrView(colors: [.orangeFolder, .blueFolder, .redFolder, .purpleFolder, .greenFolder, .yellowFolder, .grayFolder], selectedColor: $folder.color)
                 }
                 
                 Section {
