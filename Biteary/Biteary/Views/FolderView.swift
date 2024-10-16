@@ -37,6 +37,10 @@ struct FolderView: View {
                                         FoodView(food: food, folder: folder)
                                     } label: {
                                         FoodContainer(food: food)
+                                            .scrollTransition { content, phase in
+                                                content
+                                                    .scaleEffect(phase.isIdentity ? 1 : 0.1)
+                                            }
                                     }
                                 }
                             }
