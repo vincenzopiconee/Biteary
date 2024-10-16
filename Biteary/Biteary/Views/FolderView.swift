@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FolderView: View {
-        
+    
     @State private var isShowingCreateFoodView: Bool = false
     
     var folder: Folder
@@ -16,13 +16,6 @@ struct FolderView: View {
         GridItem(.fixed(150)),
         GridItem(.fixed(150))
     ]
-    /*
-    var testFood: [Food] = [
-        Food(dishName: "Pizza Frita"),
-        Food(dishName: "Pasta"),
-        Food(dishName: "Tacos")
-    ]
-     */
     
     var body: some View {
         NavigationStack {
@@ -31,16 +24,20 @@ struct FolderView: View {
                     .resizable()
                     .scaledToFill()
                     .colorMultiply(folder.getFolderColor())
-                    .opacity(0.1)
+                    .opacity(0.05)
                     .ignoresSafeArea()
                 VStack {
-                    ScrollView {
-                        LazyVGrid(columns: layout, spacing: 30) {
-                            ForEach(folder.foods) { food in
-                                NavigationLink {
-                                    FoodView(food: food, folder: folder)
-                                } label: {
-                                    FoodContainer(food: food)
+                    if folder.foods.isEmpty {
+                        WelcomeScreenView(type: "food")
+                    } else {
+                        ScrollView {
+                            LazyVGrid(columns: layout, spacing: 30) {
+                                ForEach(folder.foods) { food in
+                                    NavigationLink {
+                                        FoodView(food: food, folder: folder)
+                                    } label: {
+                                        FoodContainer(food: food)
+                                    }
                                 }
                             }
                         }
@@ -53,25 +50,26 @@ struct FolderView: View {
                     } label: {
                         AddButton()
                     }
-                    
-                }
-                .scrollContentBackground(.hidden)
-                .padding()
-                .navigationTitle(folder.name)
-                .sheet(isPresented: $isShowingCreateFoodView) {
-                    CreateFoodView(folder: folder)
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing){
-                        NavigationLink {
-                            EditFolderView(folder: folder)
-                        } label: {
-                            Text("Edit")
-                        }
-                    }
                 }
             }
         }
+        .navigationTitle(folder.name)
+        .sheet(isPresented: $isShowingCreateFoodView) {
+            CreateFoodView(folder: folder)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing){
+                NavigationLink {
+                    EditFolderView(folder: folder)
+                } label: {
+                    Text("Edit")
+                }
+                
+            }
+        }
+        
+        
+        
     }
 }
 
