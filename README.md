@@ -10,6 +10,7 @@ This app was developed in the Apple Developer Academy by:
 - Vincenzo Picone
 - Giulia Piscitelli
 - Rezzan Tekinsen
+- Mike Kostenko
 
 ## Features
 

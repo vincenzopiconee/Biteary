@@ -16,6 +16,9 @@ struct FolderListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(folders) { folder in
+                    
+                    let image = updatePreviewImage(folder)
+                    
                     NavigationLink {
                         FolderView(folder: folder)
                     } label: {
@@ -25,6 +28,7 @@ struct FolderListView: View {
 //                                    .opacity(phase.isIdentity ? 1 : 0.5) // Apply opacity animation
                                     .scaleEffect(phase.isIdentity ? 1 : 0.7)
                             }
+
                     }
                 }
             }
@@ -33,8 +37,12 @@ struct FolderListView: View {
                 .scrollTargetBehavior(.viewAligned)
     }
     init(sort: [SortDescriptor<Folder>]) {
-            _folders = Query(sort: sort)
-        }
+        _folders = Query(sort: sort)
+    }
+    
+    func updatePreviewImage(_ folder: Folder) -> UIImage? {
+        folder.foods.first?.getFirstImage()
+    }
 }
 
 #Preview {
