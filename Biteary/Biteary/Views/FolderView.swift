@@ -79,14 +79,15 @@ struct FolderView: View {
                     } label: {
                         Text("Edit")
                     }
-                }
-                
+                    
+                }                
             }
+
                 
             }
         }
     }
     
     #Preview {
-        FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: []))
+        FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")]))
     }
