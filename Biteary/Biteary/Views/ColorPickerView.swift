@@ -17,9 +17,10 @@ struct ColorPickerView: View {
                 Button {
                     selectedColor = color
                 } label: {
-                    RoundedRectangle(cornerRadius: 10)
+                    //RoundedRectangle(cornerRadius: 10)
+                    Circle()
                         .fill(color.gradient.opacity(selectedColor == color ? 1 : 0.5))
-                        .shadow(radius: 5)
+                        //.shadow(radius: 5)
                 }
                 .buttonStyle(BorderlessButtonStyle())
                 
