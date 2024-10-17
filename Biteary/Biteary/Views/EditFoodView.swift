@@ -176,6 +176,7 @@ struct EditFoodView: View {
                 }
             }
             .navigationTitle("Edit Dish")
+            .scrollDismissesKeyboard(.immediately)
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

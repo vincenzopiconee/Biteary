@@ -38,6 +38,7 @@ struct CreateFolderView: View {
                 
             }
             .navigationTitle("Create Folder")
+            .scrollDismissesKeyboard(.immediately)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
                     Button {
