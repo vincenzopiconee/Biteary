@@ -14,7 +14,7 @@ struct CreateFolderView: View {
     @State private var folderName: String = ""
     @State private var folderStartDate: Date = Date.now
     @State private var folderEndDate: Date = Date.now
-    @State private var folderColor: Color = Color.purpleFolder
+    @State private var folderColor: Color = Color.orangeFolder
     
     var body: some View {
         NavigationStack {

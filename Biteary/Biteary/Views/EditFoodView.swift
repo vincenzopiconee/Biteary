@@ -139,20 +139,6 @@ struct EditFoodView: View {
                     TextEditor(text: $food.notes)
                 }
                 
-                Section {
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            showingAlert.toggle()
-                        } label: {
-                            Text("Delete Dish")
-                                .foregroundStyle(.red)
-                        }
-                        
-                        Spacer()
-                    }
-                }
             }
             .fullScreenCover(isPresented: $showImagePicker) {
                 ImagePicker(image: self.$image, sourceType: .camera)
@@ -189,15 +175,6 @@ struct EditFoodView: View {
                         }
                     }
                 }
-            }
-            .alert("Delete Dish", isPresented: $showingAlert){
-                Button("Delete", role: .destructive) {
-                    folder.foods.removeAll(where: { $0.id == food.id })
-                    dismiss()
-                }
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure you want to delete this dish?")
             }
              
         }
