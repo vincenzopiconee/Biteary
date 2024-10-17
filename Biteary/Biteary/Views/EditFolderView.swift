@@ -55,6 +55,7 @@ struct EditFolderView: View {
                 Button("Delete", role: .destructive) {
                     folder.foods.removeAll()
                     modelContext.delete(folder)
+                    NavigationUtil.popToRootView()
                     dismiss()
                 }
                 Button("Cancel", role: .cancel) { }
