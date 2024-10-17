@@ -62,8 +62,14 @@ struct FolderListView: View {
         }
         .scrollTargetBehavior(.viewAligned)
     }
-    init(sort: [SortDescriptor<Folder>]) {
-        _folders = Query(sort: sort)
+    init(sort: [SortDescriptor<Folder>], searchString: String) {
+        _folders = Query(filter: #Predicate {
+            if searchString.isEmpty {
+                return true
+            } else {
+                return $0.name.localizedStandardContains(searchString)
+            }
+        },sort: sort)
     }
     
     func updatePreviewImage(_ folder: Folder) -> UIImage? {
@@ -72,5 +78,5 @@ struct FolderListView: View {
 }
 
 #Preview {
-    FolderListView(sort: [SortDescriptor(\Folder.name)])
+    FolderListView(sort: [SortDescriptor(\Folder.name)], searchString: "")
 }

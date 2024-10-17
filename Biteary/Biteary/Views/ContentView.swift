@@ -13,6 +13,7 @@ struct ContentView: View {
     @Query var folders: [Folder]
     
     @State private var searchText: String = ""
+    @State private var searchIsActive = false
     @State private var isShowingCreateFolderView: Bool = false
     @State private var sortOrder = [
         SortDescriptor(\Folder.dateCreated, order: .reverse),
@@ -25,7 +26,7 @@ struct ContentView: View {
                 if folders.isEmpty {
                     WelcomeScreenView(type: "folder")
                 } else {
-                    FolderListView(sort: sortOrder)
+                    FolderListView(sort: sortOrder, searchString: searchText)
                 }
                 
                 Spacer()
@@ -72,6 +73,7 @@ struct ContentView: View {
                 CreateFolderView()
             }
         }
+        .searchable(text: $searchText, isPresented: $searchIsActive,  prompt: "Search")
     }
 }
 
