@@ -50,6 +50,7 @@ struct EditFolderView: View {
                 }
             }
             .navigationTitle("Edit Folder")
+            .scrollDismissesKeyboard(.immediately)
             .alert("Delete Folder", isPresented: $showingAlert){
                 Button("Delete", role: .destructive) {
                     folder.foods.removeAll()

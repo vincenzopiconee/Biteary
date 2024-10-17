@@ -128,6 +128,7 @@ struct CreateFoodView: View {
                 }
             }
             .navigationTitle("Add Dish")
+            .scrollDismissesKeyboard(.immediately)
             .fullScreenCover(isPresented: $showImagePicker) {
                 ImagePicker(image: self.$image, sourceType: .camera)
                     .edgesIgnoringSafeArea(.all)
