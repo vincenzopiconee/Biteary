@@ -11,6 +11,7 @@ struct FolderView: View {
     
     @State private var isShowingCreateFoodView: Bool = false
     
+    @State private var showingAlert = false
     var folder: Folder
     let layout = [
         GridItem(.fixed(150)),
@@ -41,6 +42,38 @@ struct FolderView: View {
                                                 content
                                                     .scaleEffect(phase.isIdentity ? 1 : 0.1)
                                             }
+                                            .contextMenu {
+                                                Button(action: {
+                                                    showingAlert = true
+                                                }) {
+                                                    Label("Delete", systemImage: "trash")
+                                                }
+                                                
+                                                NavigationLink {
+                                                    EditFoodView(food: food, folder: folder)
+                                                } label: {
+                                                    HStack {
+                                                        Text("Edit")
+                                                        Image(systemName: "pencil")
+                                                    }
+                                                }
+
+                                                
+                                                Button(action: {
+                                                    
+                                                }) {
+                                                    Label("Share", systemImage: "square.and.arrow.up")
+                                                }
+                                            }
+                                            .alert("Delete Dish", isPresented: $showingAlert){
+                                                Button("Delete", role: .destructive) {
+                                                    folder.foods.removeAll(where: { $0.id == food.id })
+                                                }
+                                                Button("Cancel", role: .cancel) { }
+                                            } message: {
+                                                Text("Are you sure you want to delete this dish?")
+                                            }
+                                        
                                     }
                                 }
                             }

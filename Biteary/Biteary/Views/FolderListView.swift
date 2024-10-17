@@ -12,6 +12,8 @@ struct FolderListView: View {
     @Environment(\.modelContext) var modelContext
     @Query var folders: [Folder]
     
+    @State private var showingAlert = false
+    
     var body: some View {
         ScrollView {
             LazyVStack {
@@ -27,6 +29,37 @@ struct FolderListView: View {
                                 content
                                     .scaleEffect(phase.isIdentity ? 1 : 0.7)
                             }
+                            .contextMenu {
+                                Button(action: {
+                                    showingAlert.toggle()
+                                }) {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                               
+                                NavigationLink {
+                                    EditFolderView(folder: folder)
+                                } label: {
+                                    HStack {
+                                        Text("Edit")
+                                        Image(systemName: "pencil")
+                                    }
+                                }
+                                
+                                Button(action: {
+                                }) {
+                                    Label("Share", systemImage: "square.and.arrow.up")
+                                }
+                            }
+                            .alert("Delete Folder", isPresented: $showingAlert){
+                                Button("Delete", role: .destructive) {
+                                    folder.foods.removeAll()
+                                    modelContext.delete(folder)
+                                }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Are you sure you want to delete this folder?")
+                            }
+
 
                     }
                 }
