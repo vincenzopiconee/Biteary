@@ -178,7 +178,7 @@ struct CreateFoodView: View {
 }
 
 #Preview {
-    CreateFoodView(folder: Folder(id: UUID(), name: "Pizza", startDate: Date.now, endDate: Date.now, color: "orange", foods: []))
+    CreateFoodView(folder: Folder(id: UUID(), name: "Pizza", startDate: Date.now, endDate: Date.now, color: "orange", foods: [], dateCreated: Date.now))
 }
 
 struct ImagePicker: UIViewControllerRepresentable {

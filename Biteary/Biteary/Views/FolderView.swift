@@ -78,5 +78,5 @@ struct FolderView: View {
 }
 
 #Preview {
-    FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")]))
+    FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")], dateCreated: Date.now))
 }
