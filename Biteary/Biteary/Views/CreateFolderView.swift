@@ -43,7 +43,7 @@ struct CreateFolderView: View {
                 ToolbarItem(placement: .topBarTrailing){
                     Button {
                         let folderColorValue = getColor(for: folderColor)
-                        let newFolder = Folder(id: UUID(), name: folderName, startDate: folderStartDate, endDate: folderEndDate, color: folderColorValue, foods: [])
+                        let newFolder = Folder(id: UUID(), name: folderName, startDate: folderStartDate, endDate: folderEndDate, color: folderColorValue, foods: [], dateCreated: Date.now)
                         modelContext.insert(newFolder)
                         dismiss()
                     } label: {

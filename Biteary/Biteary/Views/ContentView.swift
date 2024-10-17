@@ -15,17 +15,9 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var isShowingCreateFolderView: Bool = false
     @State private var sortOrder = [
-        SortDescriptor(\Folder.name),
-        SortDescriptor(\Folder.startDate)
+        SortDescriptor(\Folder.dateCreated, order: .reverse),
+        SortDescriptor(\Folder.name)
     ]
-
-    /*
-    var testFolders: [Folder] = [
-        Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "orange", foods: [Food(dishName: "Pizza")]),
-        Folder(id: UUID(), name: "Roma", startDate: Date.now, endDate: Date.now, color: "red", foods: [Food(dishName: "Pizza")]),
-        Folder(id: UUID(), name: "Berlin", startDate: Date.now, endDate: Date.now, color: "green", foods: [Food(dishName: "Pizza")])
-    ]
-     */
     
     var body: some View {
         NavigationStack {
@@ -50,16 +42,28 @@ struct ContentView: View {
             .toolbar {
                 Menu("Sort", systemImage: "arrow.up.arrow.down") {
                     Picker("Sort", selection: $sortOrder) {
+                        Text("Sort by Newest")
+                            .tag([
+                                SortDescriptor(\Folder.dateCreated, order: .reverse),
+                                SortDescriptor(\Folder.name)
+                            ])
+                        
+                        Text("Sort by Oldest")
+                            .tag([
+                                SortDescriptor(\Folder.dateCreated),
+                                SortDescriptor(\Folder.name)
+                            ])
+                        
                         Text("Sort by Name")
                             .tag([
                                 SortDescriptor(\Folder.name),
-                                SortDescriptor(\Folder.startDate)
+                                SortDescriptor(\Folder.dateCreated)
                             ])
             
                         Text("Sort by Start Date")
                             .tag([
                                 SortDescriptor(\Folder.startDate),
-                                SortDescriptor(\Folder.name)
+                                SortDescriptor(\Folder.dateCreated)
                             ])
                     }
                 }
@@ -67,7 +71,6 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingCreateFolderView) {
                 CreateFolderView()
             }
-            
         }
     }
 }

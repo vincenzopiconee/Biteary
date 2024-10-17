@@ -66,5 +66,5 @@ struct EditFolderView: View {
 }
 
 #Preview {
-    EditFolderView(folder: Folder(id: UUID(), name: "Rome", startDate: Date.now, endDate: Date.now, color: "green", foods: [Food(dishName: "Pizza")]))
+    EditFolderView(folder: Folder(id: UUID(), name: "Rome", startDate: Date.now, endDate: Date.now, color: "green", foods: [Food(dishName: "Pizza")], dateCreated: Date.now))
 }

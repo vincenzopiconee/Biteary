@@ -17,15 +17,17 @@ class Folder: Identifiable {
     var endDate: Date
     var color: String
     var foods: [Food]
+    var dateCreated: Date
     
     //Folder class initializer
-    init(id: UUID, name: String, startDate: Date, endDate: Date, color: String, foods: [Food]) {
+    init(id: UUID, name: String, startDate: Date, endDate: Date, color: String, foods: [Food], dateCreated: Date) {
         self.id = id
         self.name = name
         self.startDate = startDate
         self.endDate = endDate
         self.color = color
         self.foods = foods
+        self.dateCreated = dateCreated
     }
     
     func getFolderColor() -> Color {
