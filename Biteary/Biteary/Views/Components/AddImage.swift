@@ -10,10 +10,12 @@
 import SwiftUI
 
 struct AddImage: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(.grayForm)
+                .fill(colorScheme == .dark ? .grayDarkMode : .grayForm)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .frame(width: 200, height: 200)
             
