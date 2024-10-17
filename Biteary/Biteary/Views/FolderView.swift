@@ -57,13 +57,6 @@ struct FolderView: View {
                                                         Image(systemName: "pencil")
                                                     }
                                                 }
-
-                                                
-                                                Button(action: {
-                                                    
-                                                }) {
-                                                    Label("Share", systemImage: "square.and.arrow.up")
-                                                }
                                             }
                                             .alert("Delete Dish", isPresented: $showingAlert){
                                                 Button("Delete", role: .destructive) {
