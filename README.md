@@ -128,3 +128,10 @@ Developed at the **Apple Developer Academy** by:
 - **Giulia Piscitelli**
 - **Rezzan Tekinsen**
 - **Mike Kostenko**
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
