@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditFolderView: View {
     @Environment(\.modelContext) var modelContext

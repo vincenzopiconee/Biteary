@@ -48,4 +48,23 @@ class Folder: Identifiable {
             return .orangeFolder
         }
     }
+    
+    func getFolderBackColor() -> Color {
+        switch color {
+        case "blue":
+            return .blueFolderBack
+        case "red":
+            return .redFolderBack
+        case "purple":
+            return .purpleFolderBack
+        case "green":
+            return .greenFolderBack
+        case "yellow":
+            return .yellowFolderBack
+        case "gray":
+            return .grayFolderBack
+        default:
+            return .orangeFolderBack
+        }
+    }
 }

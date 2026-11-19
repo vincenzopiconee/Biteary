@@ -65,4 +65,18 @@ class Food: Identifiable {
         }
         return nil
     }
+    
+    func getThumbnail(maxPixelSize: CGFloat = 400) -> UIImage? {
+        guard let firstData = imageData?.first else {
+            return nil
+        }
+        return ThumbnailDownsampler.shared.downsample(data: firstData, maxPixelSize: maxPixelSize)
+    }
+    
+    func getThumbnail(pointSize: CGSize, scale: CGFloat) -> UIImage? {
+        guard let firstData = imageData?.first else {
+            return nil
+        }
+        return ThumbnailDownsampler.shared.downsample(data: firstData, pointSize: pointSize, scale: scale)
+    }
 }

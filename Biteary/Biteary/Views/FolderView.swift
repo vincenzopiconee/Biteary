@@ -5,6 +5,7 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
+import QuickLook
 import SwiftUI
 
 struct FolderView: View {
@@ -13,10 +14,13 @@ struct FolderView: View {
     
     @State private var showingAlert = false
     @State private var foodToDelete: Food?
+    @State private var previewPDFURL: URL?
+    @State private var pdfErrorMessage: String?
     var folder: Folder
     let layout = [
-        GridItem(.fixed(150)),
-        GridItem(.fixed(150))
+        GridItem(.fixed(115)),
+        GridItem(.fixed(115)),
+        GridItem(.fixed(115))
     ]
     
     var body: some View {
@@ -89,22 +93,46 @@ struct FolderView: View {
         .sheet(isPresented: $isShowingCreateFoodView) {
             CreateFoodView(folder: folder)
         }
+        .quickLookPreview($previewPDFURL)
+        .alert("Unable to Preview Trip Guide", isPresented: Binding(
+            get: { pdfErrorMessage != nil },
+            set: { if !$0 { pdfErrorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {
+                pdfErrorMessage = nil
+            }
+        } message: {
+            Text(pdfErrorMessage ?? "An unexpected error occurred while generating the PDF.")
+        }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing){
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button {
+                    generateTripGuidePDF()
+                } label: {
+                    Image(systemName: "doc.richtext")
+                }
+                .disabled(folder.foods.isEmpty)
+                .accessibilityLabel("Preview Trip Guide PDF")
+                .accessibilityHint("Generates an A4 culinary guide PDF for this trip and opens it in Quick Look.")
+                
                 NavigationLink {
                     EditFolderView(folder: folder)
                 } label: {
                     Text("Edit")
                 }
-                
             }
         }
-        
-        
-        
+    }
+    
+    private func generateTripGuidePDF() {
+        do {
+            previewPDFURL = try TripPDFRenderer.render(folder: folder)
+        } catch {
+            pdfErrorMessage = error.localizedDescription
+        }
     }
 }
 
 #Preview {
-    FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza")], dateCreated: Date.now))
+    FolderView(folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "blue", foods: [Food(dishName: "Pizza"), Food(dishName: "Kebab"), Food(dishName: "Pallavolo")], dateCreated: Date.now))
 }

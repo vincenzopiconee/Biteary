@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FolderListView: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(\.displayScale) private var displayScale
     @Query var folders: [Folder]
     
     @State private var showingAlert = false
@@ -17,15 +18,19 @@ struct FolderListView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack (spacing: 25){
                 ForEach(folders) { folder in
-                    
-                    let image = updatePreviewImage(folder)
                     
                     NavigationLink {
                         FolderView(folder: folder)
                     } label: {
-                        FolderButton(color: folder.color, title: folder.name, startDate: folder.startDate, endDate: folder.endDate, image: image)
+                        FolderButton(
+                            color: folder.color,
+                            title: folder.name,
+                            startDate: folder.startDate,
+                            endDate: folder.endDate,
+                            imageData: folder.foods.first?.imageData?.first
+                        )
                             .scrollTransition { content, phase in
                                 content
                                     .scaleEffect(phase.isIdentity ? 1 : 0.7)
@@ -73,7 +78,7 @@ struct FolderListView: View {
     }
     
     func updatePreviewImage(_ folder: Folder) -> UIImage? {
-        folder.foods.first?.getFirstImage()
+        folder.foods.first?.getThumbnail(pointSize: CGSize(width: 100, height: 120), scale: displayScale)
     }
 }
 

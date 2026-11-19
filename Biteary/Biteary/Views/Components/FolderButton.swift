@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FolderButton: View {
-    
+    @Environment(\.displayScale) private var displayScale
     @State private var isOpened = false
     
     var color: String
@@ -52,7 +52,19 @@ struct FolderButton: View {
         return Color.orangeFolderBack
     }
     
-    var image: UIImage?
+    var image: UIImage? = nil
+    var imageData: Data? = nil
+    
+    private var resolvedImage: UIImage? {
+        if let imageData {
+            return ThumbnailDownsampler.shared.downsample(
+                data: imageData,
+                pointSize: CGSize(width: 100, height: 120),
+                scale: displayScale
+            )
+        }
+        return image
+    }
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -86,8 +98,8 @@ struct FolderButton: View {
                 }
                 .frame(width: 150, height: 150)
                 .padding(.trailing, 10)
-                if image != nil {
-                    Image(uiImage: image!)
+                if let displayImage = resolvedImage {
+                    Image(uiImage: displayImage)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 100, height: 120)

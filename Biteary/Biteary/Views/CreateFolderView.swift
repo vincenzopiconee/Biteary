@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CreateFolderView: View {
     @Environment(\.dismiss) var dismiss

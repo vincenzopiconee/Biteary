@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		276169062CB7FD4F005B1188 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 276168732CB7FD4E005B1188 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2761687A2CB7FD4E005B1188;
+			remoteInfo = Biteary;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2761687B2CB7FD4E005B1188 /* Biteary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biteary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		276169012CB7FD4F005B1188 /* BitearyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitearyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = Biteary;
 			sourceTree = "<group>";
 		};
+		276169022CB7FD4F005B1188 /* BitearyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BitearyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		276168782CB7FD4E005B1188 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		276169042CB7FD4F005B1188 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				2761687D2CB7FD4E005B1188 /* Biteary */,
+				276169022CB7FD4F005B1188 /* BitearyTests */,
 				2761687C2CB7FD4E005B1188 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				2761687B2CB7FD4E005B1188 /* Biteary.app */,
+				276169012CB7FD4F005B1188 /* BitearyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 2761687B2CB7FD4E005B1188 /* Biteary.app */;
 			productType = "com.apple.product-type.application";
 		};
+		276169082CB7FD4F005B1188 /* BitearyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 276169092CB7FD4F005B1188 /* Build configuration list for PBXNativeTarget "BitearyTests" */;
+			buildPhases = (
+				276169032CB7FD4F005B1188 /* Sources */,
+				276169042CB7FD4F005B1188 /* Frameworks */,
+				276169052CB7FD4F005B1188 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				276169072CB7FD4F005B1188 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				276169022CB7FD4F005B1188 /* BitearyTests */,
+			);
+			name = BitearyTests;
+			packageProductDependencies = (
+			);
+			productName = BitearyTests;
+			productReference = 276169012CB7FD4F005B1188 /* BitearyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					2761687A2CB7FD4E005B1188 = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					276169082CB7FD4F005B1188 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 2761687A2CB7FD4E005B1188;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				2761687A2CB7FD4E005B1188 /* Biteary */,
+				276169082CB7FD4F005B1188 /* BitearyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		276168792CB7FD4E005B1188 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		276169052CB7FD4F005B1188 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		276169032CB7FD4F005B1188 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		276169072CB7FD4F005B1188 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2761687A2CB7FD4E005B1188 /* Biteary */;
+			targetProxy = 276169062CB7FD4F005B1188 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		276168872CB7FD4F005B1188 /* Debug */ = {
@@ -306,6 +381,44 @@
 			};
 			name = Release;
 		};
+		2761690A2CB7FD4F005B1188 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R5G7KG4TJU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.vincenzopicone.bitearyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biteary.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Biteary";
+			};
+			name = Debug;
+		};
+		2761690B2CB7FD4F005B1188 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R5G7KG4TJU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.vincenzopicone.bitearyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biteary.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Biteary";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -323,6 +436,15 @@
 			buildConfigurations = (
 				2761688A2CB7FD4F005B1188 /* Debug */,
 				2761688B2CB7FD4F005B1188 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		276169092CB7FD4F005B1188 /* Build configuration list for PBXNativeTarget "BitearyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2761690A2CB7FD4F005B1188 /* Debug */,
+				2761690B2CB7FD4F005B1188 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
