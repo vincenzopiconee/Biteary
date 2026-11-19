@@ -5,7 +5,6 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
-import PhotosUI
 import SwiftUI
 
 struct EditFoodView: View {
@@ -16,13 +15,10 @@ struct EditFoodView: View {
     @Bindable var food: Food
     @Bindable var folder: Folder
 
-    @State private var showingAlert = false
-    
     let currencyFormat = Locale.current.currency?.identifier ?? "EUR"
     
     //Image var
     @State private var showImagePicker: Bool = false
-    @State private var pickerItem: PhotosPickerItem?
     @State private var showPhotosPicker: Bool = false
     @State private var showActionSheet = false
     @State private var image: UIImage?
@@ -149,17 +145,6 @@ struct EditFoodView: View {
                 ImagePicker(image: self.$image, sourceType: .photoLibrary)
                     .edgesIgnoringSafeArea(.bottom)
                     
-            }
-            .onChange(of: pickerItem) { oldItem, newItem in
-                Task {
-                    showPhotosPicker.toggle()
-
-                    if let newItem = newItem,
-                       let data = try? await newItem.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data) {
-                        image = uiImage
-                    }
-                }
             }
             .navigationTitle("Edit Dish")
             .scrollDismissesKeyboard(.immediately)

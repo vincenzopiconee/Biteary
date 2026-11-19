@@ -1,8 +1,8 @@
 //
-//  RatingView.swift
-//  Bookworm
+//  Rating.swift
+//  Biteary
 //
-//  Created by Rodrigo Llaguno on 10/08/24.
+//  Created by Rodrigo Llaguno on 10/10/24.
 //
 
 import SwiftUI

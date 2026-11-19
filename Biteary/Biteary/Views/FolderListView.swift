@@ -13,6 +13,7 @@ struct FolderListView: View {
     @Query var folders: [Folder]
     
     @State private var showingAlert = false
+    @State private var folderToDelete: Folder?
     
     var body: some View {
         ScrollView {
@@ -31,7 +32,8 @@ struct FolderListView: View {
                             }
                             .contextMenu {
                                 Button(action: {
-                                    showingAlert.toggle()
+                                    folderToDelete = folder
+                                    showingAlert = true
                                 }) {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -45,22 +47,20 @@ struct FolderListView: View {
                                     }
                                 }
                             }
-                            .alert("Delete Folder", isPresented: $showingAlert){
-                                Button("Delete", role: .destructive) {
-                                    folder.foods.removeAll()
-                                    modelContext.delete(folder)
-                                }
-                                Button("Cancel", role: .cancel) { }
-                            } message: {
-                                Text("Are you sure you want to delete this folder?")
-                            }
-
-
                     }
                 }
             }
         }
         .scrollTargetBehavior(.viewAligned)
+        .alert("Delete Folder", isPresented: $showingAlert, presenting: folderToDelete) { folder in
+            Button("Delete", role: .destructive) {
+                folder.foods.removeAll()
+                modelContext.delete(folder)
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: { _ in
+            Text("Are you sure you want to delete this folder?")
+        }
     }
     init(sort: [SortDescriptor<Folder>], searchString: String) {
         _folders = Query(filter: #Predicate {

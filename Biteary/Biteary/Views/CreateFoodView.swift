@@ -5,7 +5,6 @@
 //  Created by Rodrigo Llaguno on 10/10/24.
 //
 
-import PhotosUI
 import SwiftUI
 
 struct CreateFoodView: View {
@@ -27,7 +26,6 @@ struct CreateFoodView: View {
     @State private var showImagePicker: Bool = false
     @State private var showPhotosPicker: Bool = false
     @State private var showActionSheet = false
-    @State private var pickerItem: PhotosPickerItem?
     @State private var image: UIImage?
     
     
@@ -138,16 +136,6 @@ struct CreateFoodView: View {
                 ImagePicker(image: self.$image, sourceType: .photoLibrary)
                     .edgesIgnoringSafeArea(.bottom)
                     
-            }
-            
-            .onChange(of: pickerItem) { oldItem, newItem in
-                Task {
-                    showPhotosPicker.toggle()
-                    if let data = try? await newItem?.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data) {
-                        image = uiImage
-                    }
-                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){

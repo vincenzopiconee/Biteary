@@ -11,6 +11,7 @@ struct FoodView: View {
     
     var food: Food
     var folder: Folder
+    let currencyFormat = Locale.current.currency?.identifier ?? "EUR"
     
     var body: some View {
         NavigationStack {
@@ -40,7 +41,7 @@ struct FoodView: View {
                 }
 
                 Section("Price") {
-                    Text("\(String(food.price)) €")
+                    Text(food.price, format: .currency(code: currencyFormat))
                 }
                 
                 Section("Rating") {
@@ -69,5 +70,3 @@ struct FoodView: View {
 #Preview {
     FoodView(food: Food(dishName: "Pizza", restaurantName: "Michele",city: "Napoli", price: 7.5, rating: 4, notes: "I really liked the sauce"), folder: Folder(id: UUID(), name: "Napoli", startDate: Date.now, endDate: Date.now, color: "orange", foods: [Food(dishName: "Pizza", restaurantName: "Michele",city: "Napoli", price: 7.5, rating: 4, notes: "I really liked the sauce")], dateCreated: Date.now))
 }
-
-// dname rname date city price rating notes
